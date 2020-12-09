@@ -44,11 +44,11 @@ export default {
   .dialog {
     padding: 20px;
     position: fixed;
-    right: 0;
-    top: 0;
+    left: 0;
+    bottom: 0;
     z-index: 99;
-    height: 100vh;
-    width: 500px;
+    height: 100px;
+    width: 100vw;
     background: rgba(0,0,0,.5);
     color: #fff;
   }

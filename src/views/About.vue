@@ -2,10 +2,10 @@
   <div class="about">
     <h1>This is an about page</h1>
     <p>
-      vuex - name: {{userInfo.name}}
+      Vuex - userInfo - name: {{userInfo.name}}
     </p>
     <p>
-      vuex - avatar: 
+      Vuex - userInfo - avatar: 
       <img :src="userInfo.avatar" width="80" height="80" alt="">
     </p>
   </div>

@@ -1,15 +1,13 @@
 <template>
   <div class="home">
-
     <template v-if="showComponents">
       <hello-world msg="Welcome to Your Vue.js App">
         <template #content>
           <!-- 具名插槽 v-slot:content 简写为 #content-->
-          name slot content
+          hello-world component named slots content
         </template>
       </hello-world>
     </template>
-
     <p>
       name: <span class="c-blue">{{name}}</span>
     </p>
@@ -20,33 +18,32 @@
       numPow: <span class="c-blue">{{numPow}}</span>
     </p>
     <p>
+      numAbs: <span class="c-blue">{{numAbs}}</span>
+    </p>
+    <p>
       book title: <span class="c-blue">{{book.title}}</span>
     </p>
     <p>
-      watchColor: <span class="c-blue">{{watchColor}}</span>
-      <span 
-        class="color-box"
-        :style="{
-          background: watchColor
-        }"
-      ></span>
+      <button @click="add">add btn</button>
+      <button @click="reduce">reduce btn</button>
     </p>
     <p>
-      <button @click="add" :disabled="num >= 80">add btn</button>
-      <button @click="reduce" :disabled="num <= -80">reduce btn</button>
-    </p>
-    <p>
-      <button @click="show">show</button>
-      <button @click="hide">hide</button>
+      <button @click="show" :disabled="showComponents">show</button>
+      <button @click="hide" :disabled="!showComponents">hide</button>
     </p>
     <p>
       <button @click="toError">toError</button>
+    </p>
+    <p>
+      <span>v-model</span>
+      <c-input v-model:value="inputValue" style="width: 360px;"></c-input>
     </p>
   </div>
 </template>
 
 <script>
 import HelloWorld from '@/components/hello_world'
+import CInput from '@/components/c_input'
 import testSetup from './setup/test_setup';
 import vuexSetup from './setup/vuex_setup';
 import { onMounted } from 'vue';
@@ -55,11 +52,13 @@ export default {
   name: 'Home',
   data() {
     return {
-      showComponents: true
+      showComponents: true,
+      inputValue: 'c-input value'
     }
   },
   components: {
-    HelloWorld
+    HelloWorld,
+    CInput
   },
   mounted() {
     console.log('home onMounted ->')
@@ -72,9 +71,14 @@ export default {
       this.showComponents = false;
     }
   },
+  watch: {
+    inputValue(newValue, oldValue) {
+      console.log(`inputValue watch: ${oldValue} -> ${newValue}`)
+    }
+  },
   setup() {
 
-    let { num, book, add, reduce, numPow, watchColor } = testSetup();
+    let { num, book, add, reduce, numPow, numAbs } = testSetup();
     let { toError } = vuexSetup();
 
     const name = 'Vue 3';
@@ -91,8 +95,8 @@ export default {
       add,
       reduce,
       numPow,
-      toError,
-      watchColor
+      numAbs,
+      toError
     }
   },
 }
@@ -102,12 +106,6 @@ export default {
 .home {
   p {
     margin-block: 15px;
-  }
-  .color-box {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #666;
   }
 }
 </style>
